@@ -17,8 +17,8 @@ let countdown;
 const startTimer = () => {
   clearInterval(countdown)
   timer.timeStart = Date.now()
-  timer.timeEnd = timer.sessionLength * (60 * 1000) + Date.now()
-
+  timer.timeEnd = timer.sessionLength * (60 * 1000) + timer.timeStart
+  
   countdown = setInterval(() => {
     const then = Math.round((timer.timeEnd - Date.now()) / 1000)
     const minutes = Math.floor(then / 60)
@@ -27,7 +27,7 @@ const startTimer = () => {
     const adjustMin = minutes < 10 ? `0${minutes}` : minutes
     const adjustSec = seconds < 10 ? `0${seconds}` : seconds
 
-    console.log(adjustMin, adjustSec)
+    console.log(adjustMin, adjustSec, "timeleft", timer.timeEnd - timer.timeStart)
   }, 1000)
 }
 
@@ -38,19 +38,32 @@ startBtn.addEventListener('click', function() {
 })
 
 const resume = () => {
+  timer.timeLeft = (timer.timeEnd - timer.timePause) + Date.now()
 
+  countdown = setInterval(() => {
+    const then = Math.round((timer.timeLeft - Date.now()) / 1000)
+    const minutes = Math.floor(then / 60)
+    const seconds = Math.floor(then % 60)
+
+    const adjustMin = minutes < 10 ? `0${minutes}` : minutes
+    const adjustSec = seconds < 10 ? `0${seconds}` : seconds
+
+    console.log(adjustMin, adjustSec)
+  }, 1000)
 }
 
 resumeBtn.addEventListener('click', function() {
   pauseBtn.classList.remove('hide')
   resumeBtn.classList.add('hide')
-
+  // clearInterval(countdown)
   resume()
 })
 
 const pauseTimer = () => {
   resumeBtn.classList.remove('hide')
   pauseBtn.classList.add('hide')
+
+  timer.timePause = Date.now()
 
   clearInterval(countdown)
 }
