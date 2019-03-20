@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Pomodoro Clock</title>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="shortcut icon" href="/icon/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+    crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container">
+    <div class="wrapper">
+      <h1 id="displayTime"></h1>
+      <button class="btn btn-outline-success" id="start">Start</button>
+      <button class="btn btn-outline-danger hide" id="pause">Pause</button>
+      <button class="btn btn-outline-info hide" id="resume">Resume</button> 
+      <button class="btn btn-outline-warning" id="reset">Reset</button>
+    </div>
+    <div>
+      <h2>Session Length</h2>
+      <h3 id="sessionLength"></h3>
+      <button class="btn btn-primary" id="sessionIncrease">
+        <i class="fas fa-plus"></i>
+      </button>
+      <button class="btn btn-danger ml-3" id="sessionDecrease">
+        <i class="fas fa-minus"></i>
+      </button>
+    </div>
+
+    <div>
+      <h2>Break Length</h2>
+      <h3 id="breakLength"></h3>
+      <button class="btn btn-primary" id="breakIncrease">
+        <i class="fas fa-plus"></i>
+      </button>
+      <button class="btn btn-danger ml-3" id="breakDecrease">
+        <i class="fas fa-minus"></i>
+      </button>
+    </div>
+  </div> 
+  <script src="/pomodoro-clock.js"></script>
+</body>
+
+</html>
