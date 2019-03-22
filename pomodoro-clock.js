@@ -15,15 +15,6 @@ const pauseBtn = document.getElementById('pause')
 const resumeBtn = document.getElementById('resume')
 let countdown;
 
-const startTimer = () => {
-  countdown = setInterval(function () {
-    const now = Date.now()
-    timer.timeRemaining = Math.floor(timer.timeEnd - now)
-
-    adjustTime(timer.timeRemaining)
-  }, 1000)
-}
-
 startBtn.addEventListener('click', function () {
   startBtn.classList.add('hide')
   pauseBtn.classList.remove('hide')
@@ -46,17 +37,30 @@ resumeBtn.addEventListener('click', function () {
   startTimer()
 })
 
-const pauseTimer = () => {
+pauseBtn.addEventListener('click', function() {
   resumeBtn.classList.remove('hide')
   pauseBtn.classList.add('hide')
 
+  pauseTimer()
+})
+
+const startTimer = () => {
+  countdown = setInterval(function () {
+    const now = Date.now()
+    timer.timeRemaining = Math.floor(timer.timeEnd - now)
+
+    adjustTime(timer.timeRemaining)
+  }, 1000)
+}
+
+const pauseTimer = () => {
   const pauseTime = Date.now()
   timer.timePause = timer.timeEnd - pauseTime
 
   clearInterval(countdown)
 }
 
-pauseBtn.addEventListener('click', pauseTimer)
+
 
 const adjustTime = (ms) => {
   const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60))
