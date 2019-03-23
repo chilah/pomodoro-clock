@@ -11,7 +11,11 @@ const timer = {
 }
 
 `from timer`
-
+`vbnmlkjdflg
+fl;jksldfjl
+we;ljrlwejr
+sdl;fk;sldjf
+4erpwoirp`
 const startBtn = document.getElementById('start')
 const pauseBtn = document.getElementById('pause')
 const resumeBtn = document.getElementById('resume')
