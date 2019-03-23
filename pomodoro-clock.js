@@ -10,6 +10,8 @@ const timer = {
   isBreak: false
 }
 
+`from timer`
+
 const startBtn = document.getElementById('start')
 const pauseBtn = document.getElementById('pause')
 const resumeBtn = document.getElementById('resume')
