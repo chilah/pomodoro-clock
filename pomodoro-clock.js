@@ -1,11 +1,9 @@
 const timer = {
-  sessionLength: 0.1,
-  breakLength: 0.1,
+  sessionLength: 1,
+  breakLength: 2,
   timeStart: 0,
   timeEnd: 0,
-  timePause: 0,
   timeSet: 0,
-  timeRemaining: 0,
   isSession: false,
   isBreak: false
 }
@@ -16,10 +14,11 @@ const resumeBtn = document.getElementById('resume')
 let countdown
 
 startBtn.addEventListener('click', function() {
-  timer.timeStart = timer.sessionLength * 60
+  timer.timeSet = timer.sessionLength * 60
   pauseBtn.classList.remove('hide')
   startBtn.classList.add('hide')
-  startTimer()
+  timer.isSession = true
+  stateOfTimer()
 })
 
 pauseBtn.addEventListener('click', function() {
@@ -33,25 +32,45 @@ resumeBtn.addEventListener('click', function() {
   pauseBtn.classList.remove('hide')
   startTimer()
 })
+
 const startTimer = () => {
   countdown = setInterval(displayTimer, 1000)
 }
 
 const displayTimer = () => {
-  timer.timeStart--
+  timer.timeEnd--
 
-  let min = Math.floor(timer.timeStart / 60)
-  let sec = timer.timeStart % 60
+  let min = Math.floor(timer.timeEnd / 60)
+  let sec = timer.timeEnd % 60
   
   let adjustMin = min < 10 ? `0${min}` : min
   let adjustSec = sec < 10 ? `0${sec}` : sec
 
-  if (timer.timeStart <= 0) {
+  if (timer.timeEnd <= 0 && timer.isSession) {
+    timer.isSession = false
     clearInterval(countdown)
+    stateOfTimer()
+  }
+
+  if (timer.timeEnd <= 0 && timer.isBreak) {
+    timer.isBreak = false
+    clearInterval(countdown)
+    stateOfTimer()
   }
   console.log(adjustMin, adjustSec)
 }
 
+const stateOfTimer = () => {
+  if (timer.isSession) {
+    timer.timeEnd = timer.timeSet
+    startTimer()
+  } else {
+    timer.timeSet = timer.breakLength * 60
+    timer.timeEnd = timer.timeSet
+    timer.isBreak = true
+    startTimer()
+  }
+}
 // Display and Button section
 const displayTime = document.getElementById('displayTime');
 const sessionDisplay = document.getElementById('sessionLength');
