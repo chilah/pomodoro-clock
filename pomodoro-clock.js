@@ -1,16 +1,17 @@
 const timer = {
-  sessionLength: 1,
-  breakLength: 2,
-  timeStart: 0,
+  sessionLength: 25,
+  breakLength: 5,
   timeEnd: 0,
   timeSet: 0,
   isSession: false,
-  isBreak: false
+  isBreak: false,
+  isTimeChanged: false,
 }
 
 const startBtn = document.getElementById('start')
 const pauseBtn = document.getElementById('pause')
 const resumeBtn = document.getElementById('resume')
+const resetBtn = document.getElementById('reset')
 let countdown
 
 startBtn.addEventListener('click', function() {
@@ -30,7 +31,36 @@ pauseBtn.addEventListener('click', function() {
 resumeBtn.addEventListener('click', function() {
   resumeBtn.classList.add('hide')
   pauseBtn.classList.remove('hide')
-  startTimer()
+
+  if (timer.isTimeChanged && timer.isSession) {
+    timer.timeEnd = timer.sessionLength * 60
+    timer.isTimeChanged = false
+    startTimer()
+  } else if (timer.isTimeChanged && timer.isBreak) {
+    timer.timeEnd = timer.breakLength * 60 
+    timer.isTimeChanged = false
+    startTimer()
+  } else {
+    startTimer()
+  }
+})
+
+resetBtn.addEventListener('click', function() {
+  clearInterval(countdown)
+  timer.sessionLength = 25
+  timer.breakLength = 5
+  timeEnd = 0
+  timer.timeSet = 0
+  timer.isSession = false
+  timer.isBreak = false
+  timer.isTimeChanged = false
+  startBtn.classList.remove('hide')
+  pauseBtn.classList.add('hide')
+  resumeBtn.classList.add('hide')
+
+  displayTime.innerHTML = `${timer.sessionLength}:00`
+  sessionDisplay.innerHTML = timer.sessionLength
+  breakDisplay.innerHTML = timer.breakLength
 })
 
 const startTimer = () => {
@@ -57,7 +87,8 @@ const displayTimer = () => {
     clearInterval(countdown)
     stateOfTimer()
   }
-  console.log(adjustMin, adjustSec)
+  
+  displayTime.innerHTML = `${adjustMin}:${adjustSec}`
 }
 
 const stateOfTimer = () => {
@@ -71,6 +102,7 @@ const stateOfTimer = () => {
     startTimer()
   }
 }
+
 // Display and Button section
 const displayTime = document.getElementById('displayTime');
 const sessionDisplay = document.getElementById('sessionLength');
@@ -85,8 +117,12 @@ sessionDisplay.innerHTML = timer.sessionLength
 breakDisplay.innerHTML = timer.breakLength
 
 sessionIncrease.addEventListener('click', function () {
-  timer.sessionLength < 15 && timer.sessionLength++
+  timer.sessionLength < 60 && timer.sessionLength++
   sessionDisplay.innerHTML = timer.sessionLength
+
+  if (timer.isSession) {
+    timer.isTimeChanged = true
+  }
 
   displayTime.innerHTML = `${timer.sessionLength}:00`
 })
@@ -95,15 +131,27 @@ sessionDecrease.addEventListener('click', function () {
   timer.sessionLength > 1 && timer.sessionLength--
   sessionDisplay.innerHTML = timer.sessionLength
 
+  if (timer.isSession) {
+    timer.isTimeChanged = true
+  }
+
   displayTime.innerHTML = `${timer.sessionLength}:00`
 })
 
 breakIncrease.addEventListener('click', function () {
   timer.breakLength < 5 && timer.breakLength++
   breakDisplay.innerHTML = timer.breakLength
+
+  if (timer.isBreak) {
+    timer.isTimeChanged = true
+  }
 })
 
 breakDecrease.addEventListener('click', function () {
   timer.breakLength > 1 && timer.breakLength--
   breakDisplay.innerHTML = timer.breakLength
+
+  if (timer.isBreak) {
+    timer.isTimeChanged = true
+  }
 })
