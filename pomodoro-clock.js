@@ -12,6 +12,7 @@ const startBtn = document.getElementById('start')
 const pauseBtn = document.getElementById('pause')
 const resumeBtn = document.getElementById('resume')
 const resetBtn = document.getElementById('reset')
+const audio = document.getElementById('audio')
 let countdown
 
 startBtn.addEventListener('click', function() {
@@ -20,6 +21,7 @@ startBtn.addEventListener('click', function() {
   startBtn.classList.add('hide')
   timer.isSession = true
   stateOfTimer()
+  audio.play()
 })
 
 pauseBtn.addEventListener('click', function() {
@@ -80,12 +82,14 @@ const displayTimer = () => {
     timer.isSession = false
     clearInterval(countdown)
     stateOfTimer()
+    audio.play()
   }
 
   if (timer.timeEnd <= 0 && timer.isBreak) {
     timer.isBreak = false
     clearInterval(countdown)
     stateOfTimer()
+    audio.play()
   }
   
   displayTime.innerHTML = `${adjustMin}:${adjustSec}`
