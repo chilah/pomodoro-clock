@@ -9,41 +9,60 @@
   <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="/style.css">
   <link rel="shortcut icon" href="/icon/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 
 <body>
-  <div class="container">
-    <div class="wrapper">
-      <h1 id="displayTime"></h1>
-      <button class="btn btn-outline-success" id="start">Start</button>
-      <button class="btn btn-outline-danger hide" id="pause">Pause</button>
-      <button class="btn btn-outline-info hide" id="resume">Resume</button> 
-      <button class="btn btn-outline-warning" id="reset">Reset</button>
-    </div>
-    <div>
-      <h2>Session Length</h2>
-      <h3 id="sessionLength"></h3>
-      <button class="btn btn-primary" id="sessionIncrease">
-        <i class="fas fa-plus"></i>
-      </button>
-      <button class="btn btn-danger ml-3" id="sessionDecrease">
-        <i class="fas fa-minus"></i>
-      </button>
+  <div class="container text-white" style="height: 100vh">
+    <div class="wrapper row align-items-center justify-content-center" style="height: 70vh">
+      <div class="">
+        <h1 class="mx-auto" id="displayTime" style="font-size: 8rem"></h1>
+        <div class="text-center">
+            <button class="btn btn-outline-success" id="start">Start</button>
+            <button class="btn btn-outline-danger hide" id="pause">Pause</button>
+            <button class="btn btn-outline-info hide" id="resume">Resume</button>
+            <button class="btn btn-outline-warning ml-3" id="reset">Reset</button>
+        </div>
+      </div>
+
     </div>
 
-    <div>
-      <h2>Break Length</h2>
-      <h3 id="breakLength"></h3>
-      <button class="btn btn-primary" id="breakIncrease">
-        <i class="fas fa-plus"></i>
-      </button>
-      <button class="btn btn-danger ml-3" id="breakDecrease">
-        <i class="fas fa-minus"></i>
-      </button>
+    <!-- Increase and decrease length section -->
+    <div class="row">
+      <!-- Session Length -->
+      <div class="col-sm-6">
+        <div class="text-center">
+          <h2>Session</h2>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary" id="sessionIncrease">
+              <i class="fas fa-plus"></i>
+            </button>
+            <h2 class="mx-5" id="sessionLength"></h2>
+            <button class="btn btn-danger" id="sessionDecrease">
+              <i class="fas fa-minus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Break Length -->
+      <div class="col-sm-6">
+        <div class="text-center ml-auto">
+          <h2>Break</h2>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary" id="breakIncrease">
+              <i class="fas fa-plus"></i>
+            </button>
+            <h2 class="mx-5" id="breakLength"></h2>
+            <button class="btn btn-danger" id="breakDecrease">
+              <i class="fas fa-minus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div> 
+  </div>
+  <audio src="/sound/Cat-sound-effect.mp3" id="audio"></audio>
   <script src="/pomodoro-clock.js"></script>
 </body>
 
