@@ -15,25 +15,41 @@ const resetBtn = document.getElementById('reset')
 const audio = document.getElementById('audio')
 let countdown
 
+// Start Button
 startBtn.addEventListener('click', function() {
+  // set time for timer
   timer.timeSet = timer.sessionLength * 60
+
+  // show pause button and hide start button
   pauseBtn.classList.remove('hide')
   startBtn.classList.add('hide')
+
+  // set to true for a state of timer
   timer.isSession = true
+
+  // start timer
   stateOfTimer()
+
+  // play sound 
   audio.play()
 })
 
+// Pause Button
 pauseBtn.addEventListener('click', function() {
+  // pause time 
   clearInterval(countdown)
+  
+  // hide pause button and show resume button
   pauseBtn.classList.add('hide')
   resumeBtn.classList.remove('hide')
 })
 
+// Resume Button
 resumeBtn.addEventListener('click', function() {
   resumeBtn.classList.add('hide')
   pauseBtn.classList.remove('hide')
 
+  // check if user increase or decrease when 
   if (timer.isTimeChanged && timer.isSession) {
     timer.timeEnd = timer.sessionLength * 60
     timer.isTimeChanged = false
@@ -47,6 +63,8 @@ resumeBtn.addEventListener('click', function() {
   }
 })
 
+// Reset Button
+// Reset each value to default
 resetBtn.addEventListener('click', function() {
   clearInterval(countdown)
   timer.sessionLength = 25
@@ -65,10 +83,12 @@ resetBtn.addEventListener('click', function() {
   breakDisplay.innerHTML = timer.breakLength
 })
 
+// Timer
 const startTimer = () => {
   countdown = setInterval(displayTimer, 1000)
 }
 
+// Timer display 
 const displayTimer = () => {
   timer.timeEnd--
 
@@ -78,6 +98,7 @@ const displayTimer = () => {
   let adjustMin = min < 10 ? `0${min}` : min
   let adjustSec = sec < 10 ? `0${sec}` : sec
 
+  // If session length end, clear interval and back to state of timer
   if (timer.timeEnd <= 0 && timer.isSession) {
     timer.isSession = false
     clearInterval(countdown)
@@ -85,6 +106,7 @@ const displayTimer = () => {
     audio.play()
   }
 
+  // If break length end, clear interval and back to state of timer
   if (timer.timeEnd <= 0 && timer.isBreak) {
     timer.isBreak = false
     clearInterval(countdown)
@@ -95,6 +117,7 @@ const displayTimer = () => {
   displayTime.innerHTML = `${adjustMin}:${adjustSec}`
 }
 
+// Check what state of timer, set timeEnd and call startTimer func
 const stateOfTimer = () => {
   if (timer.isSession) {
     timer.timeEnd = timer.timeSet
@@ -120,6 +143,7 @@ displayTime.innerHTML = `${timer.sessionLength}:00`
 sessionDisplay.innerHTML = timer.sessionLength
 breakDisplay.innerHTML = timer.breakLength
 
+// increase and decrease time
 sessionIncrease.addEventListener('click', function () {
   timer.sessionLength < 60 && timer.sessionLength++
   sessionDisplay.innerHTML = timer.sessionLength
