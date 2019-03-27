@@ -6,6 +6,7 @@ const timer = {
   isSession: false,
   isBreak: false,
   isTimeChanged: false,
+  isPause: false
 }
 
 const startBtn = document.getElementById('start')
@@ -23,7 +24,7 @@ startBtn.addEventListener('click', function() {
   // show pause button and hide start button
   pauseBtn.classList.remove('hide')
   startBtn.classList.add('hide')
-
+  hideLengthBtn()
   // set to true for a state of timer
   timer.isSession = true
 
@@ -42,13 +43,17 @@ pauseBtn.addEventListener('click', function() {
   // hide pause button and show resume button
   pauseBtn.classList.add('hide')
   resumeBtn.classList.remove('hide')
+
+  // 
+  timer.isPause = true
+  hideLengthBtn()
 })
 
 // Resume Button
 resumeBtn.addEventListener('click', function() {
   resumeBtn.classList.add('hide')
   pauseBtn.classList.remove('hide')
-
+ 
   // check if user increase or decrease when 
   if (timer.isTimeChanged && timer.isSession) {
     timer.timeEnd = timer.sessionLength * 60
@@ -61,6 +66,9 @@ resumeBtn.addEventListener('click', function() {
   } else {
     startTimer()
   }
+
+  timer.isPause = false
+  hideLengthBtn()
 })
 
 // Reset Button
@@ -77,6 +85,7 @@ resetBtn.addEventListener('click', function() {
   startBtn.classList.remove('hide')
   pauseBtn.classList.add('hide')
   resumeBtn.classList.add('hide')
+  groupButtons.forEach(btn => btn.removeAttribute('disabled', ''))
 
   displayTime.innerHTML = `${timer.sessionLength}:00`
   sessionDisplay.innerHTML = timer.sessionLength
@@ -130,6 +139,15 @@ const stateOfTimer = () => {
   }
 }
 
+// Disable increase and decrease button when start timer or resume timer
+const hideLengthBtn = () => {
+  // check if timer is pause, Disabled button
+  if (!timer.isPause) {
+    groupButtons.forEach(btn => btn.setAttribute('disabled', ''))
+  } else {
+    groupButtons.forEach(btn => btn.removeAttribute('disabled', ''))
+  }
+}
 // Display and Button section
 const displayTime = document.getElementById('displayTime');
 const sessionDisplay = document.getElementById('sessionLength');
@@ -138,6 +156,7 @@ const sessionDecrease = document.getElementById('sessionDecrease');
 const breakDisplay = document.getElementById('breakLength');
 const breakIncrease = document.getElementById('breakIncrease');
 const breakDecrease = document.getElementById('breakDecrease');
+const groupButtons = document.querySelectorAll('.group-btn')
 
 displayTime.innerHTML = `${timer.sessionLength}:00`
 sessionDisplay.innerHTML = timer.sessionLength
